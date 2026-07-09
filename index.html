@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Vlad Komar — Web & UI/UX Designer</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+		<style>
+			:root {
+				--bg: #0d0d0f;
+				--bg-raised: #17171a;
+				--bg-raised-2: #1d1d20;
+				--text: #f4f1eb;
+				--text-dim: #9a968c;
+				--text-faint: #65625b;
+				--gold: #c2986a;
+				--gold-dim: #8a714f;
+				--green: #7c8c73;
+				--line: #2a2a2d;
+				--radius: 18px;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			html {
+				scroll-behavior: smooth;
+			}
+			body {
+				background: var(--bg);
+				color: var(--text);
+				font-family: "Inter", sans-serif;
+				font-optical-sizing: auto;
+				font-weight: 400;
+				line-height: 1.5;
+				overflow-x: hidden;
+			}
+
+			.serif {
+				font-family: "Inter", sans-serif;
+				font-optical-sizing: auto;
+				letter-spacing: -0.03em;
+				font-feature-settings: "ss01" 1;
+			}
+
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+
+			::selection {
+				background: var(--gold);
+				color: #0d0d0f;
+			}
+
+			/* subtle grain/noise texture */
+			body::before {
+				content: "";
+				position: fixed;
+				inset: 0;
+				background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.025) 1px, transparent 0);
+				background-size: 3px 3px;
+				pointer-events: none;
+				z-index: 1;
+				opacity: 0.5;
+			}
+
+			.wrap {
+				max-width: 1180px;
+				margin: 0 auto;
+				padding: 0 32px;
+			}
+
+			/* ===== WORK SECTION (page top) ===== */
+			.work-section {
+				padding-top: 120px;
+			}
+
+			/* ===== SECTION HEADERS ===== */
+			.section {
+				padding: 140px 0;
+			}
+			.section-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end;
+				margin-bottom: 80px;
+				gap: 40px;
+			}
+			.section-tag {
+				font-size: 13px;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--gold);
+				margin-bottom: 18px;
+				display: block;
+			}
+			.section-head h2 {
+				font-weight: 400;
+				font-size: clamp(34px, 5vw, 56px);
+				line-height: 1.05;
+			}
+			.section-head h2 strong {
+				font-weight: 600;
+			}
+			.section-head p {
+				max-width: 320px;
+				color: var(--text-dim);
+				font-size: 15px;
+				line-height: 1.7;
+				text-align: right;
+			}
+
+			/* ===== PROJECTS ===== */
+			.project {
+				display: grid;
+				grid-template-columns: 1.1fr 0.9fr;
+				gap: 64px;
+				align-items: center;
+				padding: 64px 0;
+				border-top: 1px solid var(--line);
+				position: relative;
+			}
+			.project:first-child {
+				border-top: none;
+			}
+			.project.reverse {
+				grid-template-columns: 0.9fr 1.1fr;
+			}
+			.project.reverse .project-media {
+				order: 2;
+			}
+			.project.reverse .project-info {
+				order: 1;
+			}
+
+			.project-media {
+				position: relative;
+				border-radius: var(--radius);
+				overflow: hidden;
+				aspect-ratio: 4/3.4;
+				background: var(--bg-raised);
+				border: 1px dashed var(--line);
+				transition:
+					border-color 0.3s,
+					background 0.3s;
+			}
+			.project-media:hover {
+				border-color: var(--gold-dim);
+				background: var(--bg-raised-2);
+			}
+			.project-media.has-image {
+				border: 1px solid var(--line);
+			}
+			.project-media.has-image:hover {
+				border-color: var(--gold-dim);
+				background: var(--bg-raised);
+			}
+			.project-media img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center;
+				display: block;
+				transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+			.project-media.has-image:hover img {
+				transform: scale(1.04);
+			}
+			.project-placeholder {
+				width: 100%;
+				height: 100%;
+			}
+
+			.project-num {
+				position: absolute;
+				top: 18px;
+				left: 18px;
+
+				font-size: 13px;
+				color: var(--text);
+				background: rgba(13, 13, 15, 0.55);
+				backdrop-filter: blur(6px);
+				padding: 6px 12px;
+				border-radius: 20px;
+				letter-spacing: 0.04em;
+				z-index: 2;
+			}
+
+			.project-info {
+				padding: 0 8px;
+			}
+			.project-category {
+				font-size: 12px;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--text-faint);
+				margin-bottom: 16px;
+			}
+			.project-category .dot {
+				color: var(--gold);
+				margin: 0 8px;
+			}
+			.project-info h3 {
+				font-weight: 500;
+				font-size: clamp(26px, 3.2vw, 34px);
+				line-height: 1.12;
+				margin-bottom: 18px;
+			}
+			.project-desc {
+				color: var(--text-dim);
+				font-size: 15.5px;
+				line-height: 1.75;
+				max-width: 420px;
+				margin-bottom: 28px;
+			}
+			.project-tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+				margin-bottom: 32px;
+			}
+			.project-tags span {
+				font-size: 11.5px;
+				color: var(--text-dim);
+				border: 1px solid var(--line);
+				padding: 6px 13px;
+				border-radius: 20px;
+				letter-spacing: 0.02em;
+			}
+			.project-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+				font-size: 13px;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--text);
+				border: 1px solid var(--text-faint);
+				padding: 13px 22px;
+				border-radius: 30px;
+				transition: all 0.3s;
+			}
+			.project-link svg {
+				transition: transform 0.3s;
+			}
+			.project-link:hover {
+				border-color: var(--gold);
+				color: var(--gold);
+				background: rgba(194, 152, 106, 0.06);
+			}
+			.project-link:hover svg {
+				transform: translate(3px, -3px);
+			}
+
+			.section-divider {
+				height: 1px;
+				background: var(--line);
+				margin: 0;
+			}
+
+			/* ===== CONTACT ===== */
+			.contact-section {
+				padding-top: 120px;
+				padding-bottom: 90px;
+			}
+			.contact-inner {
+				text-align: center;
+				max-width: 720px;
+				margin: 0 auto;
+			}
+			.contact-section .section-tag {
+				justify-content: center;
+				display: flex;
+			}
+			.contact-inner h2 {
+				font-weight: 400;
+				font-size: clamp(38px, 6vw, 64px);
+				line-height: 1.08;
+				margin-bottom: 28px;
+			}
+			.contact-inner h2 strong {
+				font-weight: 600;
+			}
+			.contact-inner > p {
+				color: var(--text-dim);
+				font-size: 16px;
+				max-width: 460px;
+				margin: 0 auto 50px;
+				line-height: 1.7;
+			}
+			.contact-channels {
+				display: flex;
+				justify-content: center;
+				gap: 18px;
+				margin-top: 56px;
+				flex-wrap: wrap;
+			}
+			.channel {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				border: 1px solid var(--line);
+				padding: 14px 22px;
+				border-radius: 30px;
+				font-size: 13.5px;
+				color: var(--text-dim);
+				transition: all 0.3s;
+			}
+			.channel:hover {
+				border-color: var(--gold);
+				color: var(--text);
+				background: rgba(194, 152, 106, 0.05);
+			}
+			.channel svg {
+				flex-shrink: 0;
+			}
+
+			footer {
+				border-top: 1px solid var(--line);
+				padding: 32px 0;
+			}
+			footer .wrap {
+				display: flex;
+				justify-content: space-between;
+				font-size: 12.5px;
+				color: var(--text-faint);
+				letter-spacing: 0.02em;
+			}
+
+			/* ===== RESPONSIVE ===== */
+			@media (max-width: 900px) {
+				.wrap {
+					padding: 0 22px;
+				}
+				.project,
+				.project.reverse {
+					grid-template-columns: 1fr;
+					gap: 32px;
+				}
+				.project.reverse .project-media {
+					order: 1;
+				}
+				.project.reverse .project-info {
+					order: 2;
+				}
+				.section {
+					padding: 90px 0;
+				}
+				.work-section {
+					padding-top: 70px;
+				}
+				.section-head {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 18px;
+				}
+				.section-head p {
+					text-align: left;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<section class="section work-section" id="work">
+			<div class="wrap">
+				<div class="section-head">
+					<div>
+						<span class="section-tag">Selected Work</span>
+						<h2 class="serif">
+							Projects worth
+							<br />
+							<strong>a closer look.</strong>
+						</h2>
+					</div>
+					<p>A mix of residential developments, construction brands and a few projects outside the usual niche.</p>
+				</div>
+
+				<div class="project">
+					<div class="project-media has-image">
+						<img src="images/Astrid.png" alt="Astrid project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">01</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Residential · Business Class</div>
+						<h3 class="serif">Astrid</h3>
+						<p class="project-desc">
+							A club-format residential complex among the pine forests of Irpin. Scandinavian aesthetics, full visual identity and a multi-page site built around quiet, considered
+							living.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>Multi-page Site</span>
+							<span>Visual Identity</span>
+						</div>
+						<a href="https://astrid.com.ua/uk/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="project reverse">
+					<div class="project-media has-image">
+						<img src="images/VERO.png" alt="VERO Living Club project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">02</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Residential · Lviv</div>
+						<h3 class="serif">VERO Living Club</h3>
+						<p class="project-desc">
+							Lakeside business-class living in Lviv. The site leans into a club-living concept with video storytelling, dedicated pages per property type, and a warm, editorial visual
+							language.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>Video</span>
+							<span>Multi-page Site</span>
+						</div>
+						<a href="https://www.vero.lviv.ua/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="project">
+					<div class="project-media has-image">
+						<img src="images/Soul.png" alt="Soul Park project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">03</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Residential · Lviv</div>
+						<h3 class="serif">Soul Park</h3>
+						<p class="project-desc">
+							A 'park city living' concept complete with its own international school. Built as a long-format storytelling site with an emphasis on nature, water features and community.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>Landing Page</span>
+						</div>
+						<a href="https://soul-park.com.ua/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="project reverse">
+					<div class="project-media has-image">
+						<img src="images/Lago.png" alt="Lago Homes project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">04</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Residential · Moldova</div>
+						<h3 class="serif">Lago Homes</h3>
+						<p class="project-desc">
+							Scandinavian-inspired homes on the shore of Lake Ghidighici, near Chișinău. A minimal, English-language site built around nZEB energy efficiency and clean architectural
+							lines.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>English</span>
+							<span>International</span>
+						</div>
+						<a href="https://lago-homes-verstka.smarto.agency/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="project">
+					<div class="project-media has-image">
+						<img src="images/Ozerni.png" alt="Ozerni Vezhi project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">05</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Residential · Vinnytsia</div>
+						<h3 class="serif">Ozerni Vezhi</h3>
+						<p class="project-desc">
+							A lakeside comfort-class complex in Vinnytsia. Designed with a modern glass-morphism aesthetic and an interactive quiz that helps buyers find the right apartment.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>Interactive Quiz</span>
+							<span>UI/UX</span>
+						</div>
+						<a href="https://ozernivezhi.vn.ua/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="project reverse">
+					<div class="project-media has-image">
+						<img src="images/System.png" alt="System F Construction project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">06</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Construction · Miami, USA</div>
+						<h3 class="serif">System F Construction</h3>
+						<p class="project-desc">
+							A corporate site for a Miami-based construction company. Clean, data-driven layout built around proof points — completed projects, repeat clients, square footage built.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>English</span>
+							<span>Corporate</span>
+						</div>
+						<a href="https://systemfconstruction.com/ua/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="project">
+					<div class="project-media has-image">
+						<img src="images/Dzen.png" alt="Dzen Residence project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">07</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Resort Living · Carpathians</div>
+						<h3 class="serif">Dzen Residence</h3>
+						<p class="project-desc">
+							A wellness-focused resort residence in the Carpathian mountains. Long-form, emotive copy and a draggable interactive map make this the most content-rich project in the
+							collection.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>Investment</span>
+							<span>Interactive Map</span>
+						</div>
+						<a href="https://dzen-residence.com/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+
+				<div class="project reverse">
+					<div class="project-media has-image">
+						<img src="images/Assault.png" alt="1st Assault Regiment project preview" loading="lazy" decoding="async" />
+						<div class="project-num serif">08</div>
+					</div>
+					<div class="project-info">
+						<div class="project-category">Recruitment · Outside the Niche</div>
+						<h3 class="serif">1st Assault Regiment</h3>
+						<p class="project-desc">
+							A recruitment site for a Ukrainian military unit — a deliberate step outside the real estate niche. Dark, high-contrast visuals paired with a values-driven narrative and a
+							structured application form.
+						</p>
+						<div class="project-tags">
+							<span>Web Design</span>
+							<span>Brand Identity</span>
+							<span>Forms</span>
+						</div>
+						<a href="https://davinci.army/" target="_blank" class="project-link">
+							View Live Site
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10" /></svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="wrap"><div class="section-divider"></div></div>
+
+		<section class="section contact-section" id="contact">
+			<div class="wrap">
+				<div class="contact-inner">
+					<span class="section-tag">Get in Touch</span>
+					<h2 class="serif">
+						Got a project
+						<br />
+						in mind?
+						<strong>Let's talk.</strong>
+					</h2>
+					<p>Open to new opportunities and freelance projects. Drop me a line — I usually reply within a day.</p>
+					<div class="contact-channels">
+						<a href="mailto:k0935827497@gmail.com" class="channel">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+								<path d="M4 4h16v16H4z" stroke="none" />
+								<path d="M22 6 12 13 2 6" />
+								<rect x="2" y="4" width="20" height="16" rx="2" />
+							</svg>
+							k0935827497@gmail.com
+						</a>
+						<a href="tel:+380957295338" class="channel">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+								<path
+									d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+								/>
+							</svg>
+							+380 95 729 5338
+						</a>
+						<a href="https://www.behance.net/910b6b63" target="_blank" class="channel">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path
+									d="M7.8 11.6c.9-.5 1.4-1.3 1.4-2.5 0-2.3-1.7-3.3-3.8-3.3H0v12.4h5.7c2.3 0 4.3-1.1 4.3-3.6 0-1.5-.7-2.5-2.2-3zM2.6 7.8h2.4c1 0 1.9.3 1.9 1.5s-.7 1.6-1.8 1.6H2.6V7.8zm2.7 8.4H2.6v-3.5h2.8c1.2 0 2.1.5 2.1 1.8 0 1.3-1 1.7-2.2 1.7zm9.9-9.8c-3 0-4.9 2.1-4.9 5.1 0 3.1 1.8 5.1 5 5.1 2.3 0 3.9-1 4.6-3h-2.1c-.2.7-1.1 1.2-2.4 1.2-1.6 0-2.6-.9-2.7-2.6h7.4c.1-3.2-1.5-5.8-4.9-5.8zm-2.5 4.4c.1-1.3 1-2.2 2.4-2.2 1.5 0 2.2 1 2.3 2.2h-4.7zM12.4 4h4.9v1.2h-4.9z"
+								/>
+							</svg>
+							Behance
+						</a>
+						<a href="https://www.linkedin.com/in/vlad-komar-a078a51a4/" target="_blank" class="channel">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+								<path
+									d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"
+								/>
+							</svg>
+							LinkedIn
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			<div class="wrap">
+				<span>© 2026 Vlad Komar</span>
+				<span>Designed with care, built with Figma + AI</span>
+			</div>
+		</footer>
+	</body>
+</html>
